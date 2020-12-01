@@ -30,7 +30,7 @@ void day01() {
     // solve part 1
     bool finished = false;
     for (auto it1 = parsed_input.begin(); it1 != parsed_input.end() && !finished; ++it1) {
-        for (auto it2 = parsed_input.begin(); it2 != parsed_input.end() && !finished; ++it2) {
+        for (auto it2 = it1+1; it2 != parsed_input.end() && !finished; ++it2) {
             if (*it1 + *it2 == 2020) {
                 std::cout << "the solution of part 1 is " << *it1 * *it2 << std::endl;
                 finished = true;
@@ -41,8 +41,8 @@ void day01() {
     // solve part 2
     finished = false;
     for (auto it1 = parsed_input.begin(); it1 != parsed_input.end() && !finished; ++it1) {
-        for (auto it2 = parsed_input.begin(); it2 != parsed_input.end() && !finished; ++it2) {
-            for (auto it3 = parsed_input.begin(); it3 != parsed_input.end() && !finished; ++it3) {
+        for (auto it2 = it1+1; it2 != parsed_input.end() && !finished; ++it2) {
+            for (auto it3 = it2+1; it3 != parsed_input.end() && !finished; ++it3) {
                 if (*it1 + *it2 + *it3 == 2020) {
                     std::cout << "the solution of part 2 is " << *it1 * *it2 * *it3 << std::endl;
                     finished = true;
