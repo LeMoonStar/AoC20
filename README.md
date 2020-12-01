@@ -14,3 +14,4 @@ LeMoonStar's Advent of Code 2020 solutions
 + derNiklaas' [AoC-2020](https://github.com/derNiklaas/AoC-2020)
 + NetworkExceptions's [AdventOfCode](https://github.com/networkException/AdventOfCode)
 + Daan Breur's [AdventOfCode](https://github.com/daanbreur/AdventofCode)
++ Trojaner's [AdventofCode2020](https://github.com/TrojanerHD/AdventofCode2020)
