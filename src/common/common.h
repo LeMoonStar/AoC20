@@ -20,3 +20,12 @@ std::vector<std::string> split(std::string str, const std::string& seperator);
  * @return std::vector<std::string> all sub-strings
  */
 std::vector<std::string> split(const std::string& str, const std::vector<std::string>& seperators = {"\n", "\r", "\n\r", "\r\n"});
+
+/**
+ * @brief checks if the string only contains digits 
+ * 
+ * @param str the string to be checked
+ * @return true the string contains only digits
+ * @return false the string contains other characters too OR the string is empty
+ */
+bool isNumber(const std::string& str);

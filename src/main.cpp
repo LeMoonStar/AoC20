@@ -1,18 +1,47 @@
+#define INCLUDED_BY_MAIN
+
 #include <iostream>
 
 #include <day01.h>
 
+#include <cli.h>
+#include <common.h>
+
 int main() {
-    std::cout << "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" << std::endl
-              << "X Advent Of Code 2020 solutions                              X" << std::endl
-              << "X By LeMoonStar                                              X" << std::endl
-              << "X Licensed under the terms and conditions of the MIT license X" << std::endl
-              << "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" << std::endl;
+    std::map<int, void(*)(cli&)> days;
+
+    #ifdef LAST_DAY_INIT
+    LAST_DAY_INIT(days);
+    #endif // LAST_DAY_INIT
+
+    cli c;
+
+    c.printLine();
+    c.print("Advent Of Code 2020 solutions");
+    c.print("By LeMoonStar");
+    c.print("Licensed under the terms and conditions of the MIT license");
+    c.printLine();
+
+    c.print("The following days are avaliable to choose from:");
+    std::vector<std::string> human_readable_days;
+    for (auto it = days.begin(); it != days.end(); ++it) {
+        human_readable_days.push_back(std::to_string(it->first));
+    }
+    c.printLine();
+    c.printList(human_readable_days);
+
+    while (true) {
+        std::string input = c.getSingleLineInput("Please select a day by entering the corresponding number");
+        if (isNumber(input)) {
+            std::map<int, void(*)(cli&)>::iterator selected_day = days.find(std::stoi(input));
+            if (selected_day != days.end()) {
+                selected_day->second(c);
+                return 0;
+            } else
+                c.print("the day with the number you selected is not supported");
+        } else
+            c.print("your input is not a valid number");
+    }
     
-    std::cout << "the Command Line Interface is currently not implemented." << std::endl
-              << "cause currently only the first day is supported, you will automatically be taken to this task." << std::endl;
-
-    day01();
-
     return 0;
 }

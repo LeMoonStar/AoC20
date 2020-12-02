@@ -31,3 +31,13 @@ std::vector<std::string> split(const std::string& str, const std::vector<std::st
 
     return result;
 }
+
+bool isNumber(const std::string& str) {
+    if (str.size() == 0)
+        return false;
+    for (auto it = str.begin(); it != str.end(); ++it) {
+        if (!std::isdigit(*it))
+            return false;
+    }
+    return true;
+}
