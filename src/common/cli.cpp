@@ -89,13 +89,13 @@ void cli::printList(std::vector<std::string> list) {
 
 std::string cli::getInput(const std::string& desc) {
     print(desc);
-    print("press # and Enter to confirm the input");
+    print("press * and Enter to confirm the input");
     printLine();
     std::cout << ">";
     std::string input;
     char ch;
     while((ch = getchar()) != EOF) {
-        if (ch == '#')
+        if (ch == '*')
             break;
 
         input += ch;
