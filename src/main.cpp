@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include <day01.h>
+#include <day02.h>
 
 #include <cli.h>
 #include <common.h>
