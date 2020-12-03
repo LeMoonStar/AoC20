@@ -60,7 +60,7 @@ public:
 };
 
 void day02(cli& c) {
-    std::vector<std::string> input = split(c.getInput("please enter your input for Day 1 (https://adventofcode.com/2020/day/2)"));
+    std::vector<std::string> input = split(c.getInput("please enter your input for Day 2 (https://adventofcode.com/2020/day/2)"));
     std::vector<Password> data;
     for (auto it = input.begin(); it != input.end(); ++it) {
         if (*it == "")
