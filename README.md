@@ -9,7 +9,38 @@
 
 LeMoonStar's Advent of Code 2020 solutions
 
-### Check out the AoC2020 solutions of some other people
+## Building and compiling
+### Windows (MinGW)
+#### Required programs
++ [git](https://git-scm.com/download/win)
++ [CMake's binary distribution](https://cmake.org/download/). Select the radio button that says "Add CMake to the system PATH" either for all users or for the current user or [add it to PATH](https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable/) if you have already installed it
++ [MinGW](https://osdn.net/projects/mingw/releases/). [Add the bin folder (Default: C:\MinGW\bin) to PATH](https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable/) and open the MinGW Installation Manager. Install `mingw32-base-bin` and `mingw32-gcc-g++-bin` by right clicking on the entries and selecting "Mark for Installation". Afterwards, click on Installation (Alt + I) and Apply Changes (A). Wait for the downloads to be finished
+
+#### Building
++ Open a new Terminal (cmd, not PowerShell) by typing in cmd in the Windows search or pressing `Windows + R`, typing in `cmd` and pressing enter
++ Navigate to a directory of your choice where you want to download the source code by typing in `cd path` where `path` can be choosen freely (example: `cd C:\USERNAME\Documents`) and press enter afterwards. (Sidenote: If the directory is not on your main drive (By default: `C:`), you have to type in the drive letter followed by a colon (Example: `D:`) and enter)
++ Type (or copy and paste)
+```bat
+git clone https://github.com/LeMoonStar/AoC20
+cd AoC20
+mkdir build
+cd build
+cmake .. -G "MinGW Makefiles"
+```
+and press enter
++ Type (or copy and paste)
+```bat
+mingw32-make
+```
+and press enter
++ Type (or copy and paste)
+```bat
+cd ../bin
+```
+followed by enter
++ Enter `AoC2020.exe` to start the program
+
+## Check out the AoC2020 solutions of some other people
 + Andi's [aoc2020](https://github.com/andi-makes/aoc2020)
 + derNiklaa's [AoC-2020](https://github.com/derNiklaas/AoC-2020)
 + NetworkExceptions's [AdventOfCode](https://github.com/networkException/AdventOfCode)
