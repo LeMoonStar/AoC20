@@ -115,6 +115,29 @@ std::string cli::getSingleLineInput(const std::string& desc) {
     return input;
 }
 
+std::vector<std::string> cli::getSplittedInput(const std::string& desc) {
+    print(desc);
+    print("press * and Enter to confirm the input");
+    printLine();
+    std::cout << ">";
+    std::vector<std::string> input = {""};
+    char ch;
+    while((ch = getchar()) != EOF) {
+        if (ch == '*')
+            break;
+        if (ch == '\n') {
+            input.push_back("");
+            continue;
+        }
+        if (ch == '\r')
+            continue;
+
+        input[input.size() -1] += ch;
+    }
+    printLine();
+    return input;
+}
+
 void cli::printLine() {
     while (cursorPos <= width) {
         std::cout << "#";

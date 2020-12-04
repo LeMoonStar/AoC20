@@ -43,6 +43,15 @@ public:
     std::string getSingleLineInput(const std::string& desc);
 
     /**
+     * @brief get Input from the user splitted by lines.
+     *        Unlike split(cli::getInput("desc")) DOES include empty lines.
+     * 
+     * @param desc a description to be shown to the user
+     * @return std::vector<std::string> a vector of the lines inputted by the user
+     */
+    std::vector<std::string> getSplittedInput(const std::string& desc);
+
+    /**
      * @brief draw a seperator line
      * 
      */
