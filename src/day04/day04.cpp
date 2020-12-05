@@ -4,10 +4,6 @@
 #include <cli.h>
 #include <regex>
 
-cli* cl = nullptr;
-
-
-
 class Id {
     std::vector<std::string> attributes;
     const std::regex byr = std::regex("^byr:(19[2-9][0-9]|200[0-2])$");
@@ -42,11 +38,6 @@ public:
             else if (it->substr(0, 3) == "cid") has_cid = true;
         }
 
-        
-        cl->printList(attributes);
-        cl->print(std::to_string(has_byr) + std::to_string(has_iyr) + std::to_string(has_eyr) + std::to_string(has_hgt) + std::to_string(has_hcl) + std::to_string(has_ecl) + std::to_string(has_pid));
-        cl->printLine();
-
         return has_byr
             && has_iyr
             && has_eyr
@@ -77,11 +68,6 @@ public:
             //else if (it->substr(0, 3) == "cid") has_cid = true;
         }
 
-        
-        cl->printList(attributes);
-        cl->print(std::to_string(has_byr) + std::to_string(has_iyr) + std::to_string(has_eyr) + std::to_string(has_hgt) + std::to_string(has_hcl) + std::to_string(has_ecl) + std::to_string(has_pid));
-        cl->printLine();
-
         return has_byr
             && has_iyr
             && has_eyr
@@ -93,8 +79,6 @@ public:
 };
 
 void day04(cli& c) {
-    cl = &c;
-
     std::vector<std::string> input = c.getSplittedInput("please enter your input for Day 4 (https://adventofcode.com/2020/day/4)");
     input.erase(input.begin()); // for some reason there is a empty line at the beginning... ugly fix, but it works
 
