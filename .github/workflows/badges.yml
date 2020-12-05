@@ -1,0 +1,31 @@
+name: Update AoC Badges
+on:
+  schedule:                                      # run workflow based on schedule
+    - cron: '59 23 1-25 12 *'                    # from the 1. December till 25. December every day at 23 o'clock
+
+  workflow_dispatch:                             # allow to manually start the workflow 
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    
+      - uses: actions/checkout@v2                # clones your repo, make sure the ssh secret is set!
+        with:
+          ssh-key: ${{ secrets.SSH_KEY }}
+          
+      - uses: joblo2213/aoc-badges-action@v1.1
+        with:
+          userid: 670567                          # your user id, see setup on how to obtain
+          session: ${{ secrets.AOC_SESSION }}    # secret containing session code, see setup on how to obtain
+          
+          dayRegex: '(?<=https:\/\/img\.shields\.io\/badge\/Days%20completed-)[0-9]+(?=-red)'  # Regualr expression that finds the content of the day badge iun your file.
+          starsRegex: '(?<=https:\/\/img\.shields\.io\/badge\/Stars-)[0-9]+(?=-yellow)'        # Regualr expression that finds the content of the stars badge iun your file.
+
+      - name: Push changes                        # Step that pushes these local changes back to your github repo
+        run: |
+          git config --global user.email "<>"
+          git config --global user.name "aoc-badges-action"
+          git add .
+          git diff-index --quiet HEAD || git commit --message "Update badges"
+          git push
