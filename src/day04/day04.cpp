@@ -10,9 +10,9 @@ cli* cl = nullptr;
 
 class Id {
     std::vector<std::string> attributes;
-    const std::regex byr = std::regex("^byr:(19[2-9][0-9]|20[0-1][0-9]|2020)$");
-    const std::regex iyr = std::regex("^iyr:(20[0-9]|2020)$");
-    const std::regex eyr = std::regex("^eyr:20[2-3][0-9]$");
+    const std::regex byr = std::regex("^byr:(19[2-9][0-9]|200[0-2])$");
+    const std::regex iyr = std::regex("^iyr:(201[0-9]|2020)$");
+    const std::regex eyr = std::regex("^eyr:(202[0-9]|2030)$");
     const std::regex hgt = std::regex("^hgt:(59in|6[0-9]in|7[0-6]in|1[5-8][0-9]cm|19[0-3]cm)$");
     const std::regex hcl = std::regex("^hcl:#[a-f0-9]{6}$");
     const std::regex ecl = std::regex("^ecl:(amb|blu|brn|gry|grn|hzl|oth)$");
@@ -120,7 +120,7 @@ void day04(cli& c) {
     for (auto it = ids.begin(); it != ids.end(); ++it) {
         if (it->isValidPart2()) valid_count++;
     }
-    c.print("the solution of part 2 is: " + std::to_string(valid_count-1)); // -1 is, for some reason, required
+    c.print("the solution of part 2 is: " + std::to_string(valid_count));
 
 
 
