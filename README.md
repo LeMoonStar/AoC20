@@ -10,6 +10,35 @@
 LeMoonStar's Advent of Code 2020 solutions
 
 ## Building and compiling
+### Linux (Unix Makefiles)
+#### Requirements
++ [git](https://git-scm.com/download/linux)
++ [CMake](https://cmake.org/)
++ [gnu make](https://www.gnu.org/software/make/)
++ a compiler of your choise (only tested with GCC and CLang)
+
+#### Building
++ Open a new Terminal
++ Navigate to the directory you want the AoC20 project placed
++ Type (or copy and paste)
+  ```bash
+  git clone https://github.com/LeMoonStar/AoC20
+  cd AoC20
+  mkdir build && cd build
+  cmake .. -G "Unix Makefiles"
+  ```
+  this will clone the project and create all required makefiles.
++ Type (or copy and paste)
+  ```bash
+  make
+  ```
+  to compile and link the executable.
++ Type (or copy and paste)
+  ```bash
+  cd ../bin
+  ```
+  to move to the folder the Executable is placed in.
++ To then execute the executable type `./AoC20`, if everything worked correctly you should now be able to use it.
 ### Windows (MinGW)
 #### Required programs
 + [git](https://git-scm.com/download/win)
