@@ -20,24 +20,24 @@ LeMoonStar's Advent of Code 2020 solutions
 + Open a new Terminal (cmd, not PowerShell) by typing in cmd in the Windows search or pressing `Windows + R`, typing in `cmd` and pressing enter
 + Navigate to a directory of your choice where you want to download the source code by typing in `cd path` where `path` can be choosen freely (example: `cd C:\USERNAME\Documents`) and press enter afterwards. (Sidenote: If the directory is not on your main drive (By default: `C:`), you have to type in the drive letter followed by a colon (Example: `D:`) and enter)
 + Type (or copy and paste)
-```bat
-git clone https://github.com/LeMoonStar/AoC20
-cd AoC20
-mkdir build
-cd build
-cmake .. -G "MinGW Makefiles"
-```
-and press enter
+  ```bat
+  git clone https://github.com/LeMoonStar/AoC20
+  cd AoC20
+  mkdir build
+  cd build
+  cmake .. -G "MinGW Makefiles"
+  ```
+  and press enter
 + Type (or copy and paste)
-```bat
-mingw32-make
-```
-and press enter
+  ```bat
+  mingw32-make
+  ```
+  and press enter
 + Type (or copy and paste)
-```bat
-cd ../bin
-```
-followed by enter
+  ```bat
+  cd ../bin
+  ```
+  followed by enter
 + Enter `AoC2020.exe` to start the program
 
 ## Check out the AoC2020 solutions of some other people
