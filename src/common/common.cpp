@@ -41,3 +41,11 @@ bool isNumber(const std::string& str) {
     }
     return true;
 }
+
+std::vector<char> splitToChars(const std::string& str) {
+    std::vector<char> out;
+    for (auto it = str.begin(); it != str.end(); ++it) {
+        out.push_back(*it);
+    }
+    return out;
+}

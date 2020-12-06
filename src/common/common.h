@@ -29,3 +29,11 @@ std::vector<std::string> split(const std::string& str, const std::vector<std::st
  * @return false the string contains other characters too OR the string is empty
  */
 bool isNumber(const std::string& str);
+
+/**
+ * @brief splits a string into it's chars
+ * 
+ * @param str the string to be splitted
+ * @return std::vector<char> a vector of the characters from the string
+ */
+std::vector<char> splitToChars(const std::string& str);
