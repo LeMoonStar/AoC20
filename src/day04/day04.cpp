@@ -80,7 +80,7 @@ public:
 
 void day04(cli& c) {
     std::vector<std::string> input = c.getSplittedInput("please enter your input for Day 4 (https://adventofcode.com/2020/day/4)");
-    input.erase(input.begin()); // for some reason there is a empty line at the beginning... ugly fix, but it works
+    //input.erase(input.begin()); // for some reason there is a empty line at the beginning... ugly fix, but it works
 
     std::vector<Id> ids;
 

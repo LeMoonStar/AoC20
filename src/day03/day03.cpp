@@ -29,7 +29,7 @@ int countTrees(const std::vector<std::string>& map, int slope_x, int slope_y) {
 
 void day03(cli& c) {
     std::vector<std::string> map = split(c.getInput("please enter your input for Day 3 (https://adventofcode.com/2020/day/3)"));
-    map.erase(map.begin()); // for some reason there is a empty line at the beginning... ugly fix, but it works
+    //map.erase(map.begin()); // for some reason there is a empty line at the beginning... ugly fix, but it works
 
     std::vector<std::pair<int, int>> slopes  = {{1,1}, /*{3,1},*/ {5,1}, {7,1}, {1,2}};
 
