@@ -19,6 +19,7 @@ jobs:
           userid: 670567                          # your user id, see setup on how to obtain
           session: ${{ secrets.AOC_SESSION }}    # secret containing session code, see setup on how to obtain
           
+          daysCompletedRegex: '(?<=https:\/\/img\.shields\.io\/badge\/Days%20completed-)[0-9]+(?=-red)'
           starsRegex: '(?<=https:\/\/img\.shields\.io\/badge\/Stars-)[0-9]+(?=-yellow)'        # Regualr expression that finds the content of the stars badge iun your file.
 
       - name: Push changes                        # Step that pushes these local changes back to your github repo
