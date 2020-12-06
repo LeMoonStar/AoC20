@@ -100,6 +100,7 @@ std::string cli::getInput(const std::string& desc) {
 
         input += ch;
     }
+    input += "\n";
     printLine();
     return input;
 }
@@ -120,19 +121,22 @@ std::vector<std::string> cli::getSplittedInput(const std::string& desc) {
     print("press * and Enter to confirm the input");
     printLine();
     std::cout << ">";
-    std::vector<std::string> input = {""};
+    std::vector<std::string> input = {};
     char ch;
     while((ch = getchar()) != EOF) {
-        if (ch == '*')
+        if (ch == '*') {
             break;
+        }
+        
         if (ch == '\n') {
             input.push_back("");
             continue;
         }
+        
         if (ch == '\r')
             continue;
 
-        input[input.size() -1] += ch;
+        *std::prev(input.end()) += ch;
     }
     printLine();
     return input;
