@@ -1,6 +1,7 @@
 #include "common.h"
 
 #include <iostream>
+#include <algorithm>
 
 std::vector<std::string> split(std::string str, const std::string& seperator) {
     std::vector<std::string> result;
@@ -42,10 +43,11 @@ bool isNumber(const std::string& str) {
     return true;
 }
 
-std::vector<char> splitToChars(const std::string& str) {
+std::vector<char> splitToChars(const std::string& str, const std::vector<char>& ignore_list) {
     std::vector<char> out;
     for (auto it = str.begin(); it != str.end(); ++it) {
-        out.push_back(*it);
+        if (std::find(ignore_list.begin(), ignore_list.end(), *it) == ignore_list.end())
+            out.push_back(*it);
     }
     return out;
 }

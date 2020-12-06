@@ -34,6 +34,7 @@ bool isNumber(const std::string& str);
  * @brief splits a string into it's chars
  * 
  * @param str the string to be splitted
+ * @param ignore_list a vector of chars to be ignored
  * @return std::vector<char> a vector of the characters from the string
  */
-std::vector<char> splitToChars(const std::string& str);
+std::vector<char> splitToChars(const std::string& str, const std::vector<char>& ignore_list = {' ', '\n', '\r'});
