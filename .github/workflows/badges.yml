@@ -14,12 +14,11 @@ jobs:
         with:
           ssh-key: ${{ secrets.SSH_KEY }}
           
-      - uses: joblo2213/aoc-badges-action@v1.2
+      - uses: joblo2213/aoc-badges-action@v2
         with:
           userid: 670567                          # your user id, see setup on how to obtain
           session: ${{ secrets.AOC_SESSION }}    # secret containing session code, see setup on how to obtain
           
-          dayRegex: '(?<=https:\/\/img\.shields\.io\/badge\/Days%20completed-)[0-9]+(?=-red)'  # Regualr expression that finds the content of the day badge iun your file.
           starsRegex: '(?<=https:\/\/img\.shields\.io\/badge\/Stars-)[0-9]+(?=-yellow)'        # Regualr expression that finds the content of the stars badge iun your file.
 
       - name: Push changes                        # Step that pushes these local changes back to your github repo
