@@ -9,6 +9,7 @@
 #include <day05.h>
 #include <day06.h>
 #include <day07.h>
+#include <day08.h>
 
 #include <cli.h>
 #include <common.h>
