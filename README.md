@@ -2,8 +2,8 @@
 
 
 [![About](https://img.shields.io/badge/Advent%20of%20Code-2020-brightgreen)](https://adventofcode.com/2020/about)
-![Days completed](https://img.shields.io/badge/Days%20completed-7-red)
-![Stars](https://img.shields.io/badge/Stars-14-yellow)
+![Days completed](https://img.shields.io/badge/Days%20completed-8-red)
+![Stars](https://img.shields.io/badge/Stars-16-yellow)
 [![Language: C++](https://img.shields.io/badge/Language-CPP-blue.svg)](https://en.m.wikipedia.org/wiki/C%2B%2B)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://mit-license.org/)
 
