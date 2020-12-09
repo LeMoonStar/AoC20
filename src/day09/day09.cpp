@@ -12,6 +12,7 @@ void day09(cli& c) {
         data.push_back(std::stoul(*it));
     }
 
+    unsigned long invalid_number;
     for (auto num = data.begin()+25; num != data.end(); ++num) {
         bool found = false;
         for (auto it = num-25; it != num-1; ++it) {
@@ -25,7 +26,28 @@ void day09(cli& c) {
         }
         if (!found) {
             c.print("the solution to part 1 is: " + std::to_string(*num));
+            invalid_number = *num;
             break;
+        }
+    }
+
+    for (auto it = data.begin(); it != data.end(); ++it) {
+        for (auto it2 = it+1; it2 != data.end(); ++it2) {
+            
+            //std::vector<unsigned long> list;
+            unsigned long min = 9999999999999999999, max = 0, sum = 0;
+            for (auto it3 = it; it3 != it2; ++it3) {
+                if (*it3 > max) max = *it3;
+                if (*it3 < min) min = *it3;
+                sum += *it3;
+            }
+
+            if (sum == invalid_number) {
+                c.print("the solution to part 2 is: " + std::to_string(min + max));
+                return;
+            }
+
+            
         }
     }
 }
