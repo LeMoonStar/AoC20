@@ -10,6 +10,7 @@
 #include <day06.h>
 #include <day07.h>
 #include <day08.h>
+#include <day09.h>
 
 #include <cli.h>
 #include <common.h>
