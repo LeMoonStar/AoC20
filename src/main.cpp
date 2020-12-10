@@ -11,6 +11,7 @@
 #include <day07.h>
 #include <day08.h>
 #include <day09.h>
+#include <day10.h>
 
 #include <cli.h>
 #include <common.h>
