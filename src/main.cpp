@@ -13,6 +13,7 @@
 #include <day09.h>
 #include <day10.h>
 #include <day11.h>
+#include <day12.h>
 
 #include <cli.h>
 #include <common.h>
