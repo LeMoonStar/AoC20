@@ -19,21 +19,58 @@ struct RectengularCoordinate {
         );
     }
 
+    RectengularCoordinate operator- (const RectengularCoordinate& rhs) {
+        return RectengularCoordinate(
+            this->x - rhs.x,
+            this->y - rhs.y
+        );
+    }
+    
+    RectengularCoordinate operator* (const RectengularCoordinate& rhs) {
+        return RectengularCoordinate(
+            this->x * rhs.x,
+            this->y * rhs.y
+        );
+    }
+
+    RectengularCoordinate operator* (int rhs) {
+        return RectengularCoordinate(
+            this->x * rhs,
+            this->y * rhs
+        );
+    }
+
     RectengularCoordinate operator+= (const RectengularCoordinate& rhs) {
         *this = *this + rhs;
         return *this;
     }
 
+    RectengularCoordinate operator-= (const RectengularCoordinate& rhs) {
+        *this = *this - rhs;
+        return *this;
+    }
+
+    RectengularCoordinate operator*= (const RectengularCoordinate& rhs) {
+        *this = *this * rhs;
+        return *this;
+    }
+
+    RectengularCoordinate operator*= (int rhs) {
+        *this = *this * rhs;
+        return *this;
+    }
 };
 
 struct PolarCoordinate {
-    double angle;
-    double radius;
+    long double angle;
+    long double radius;
     PolarCoordinate(double ang, double rad) : angle(ang), radius(rad) {
     }
 
     template<typename T>
-    PolarCoordinate(RectengularCoordinate<T> rect) : radius( sqrt(rect.x*rect.x + rect.y*rect.y) ), angle( atan((double)rect.y/rect.x) ) {
+    PolarCoordinate(RectengularCoordinate<T> rect)
+        : radius( sqrt(rect.x*rect.x + rect.y*rect.y) ),
+          angle( atan((long double)rect.y/(long double)rect.x) ) {
     }
 
     template<typename T>
@@ -123,7 +160,7 @@ struct Instruction {
     }
 
     template<typename T>
-    void execute(RectengularCoordinate<T>* pos, double* facing) {
+    void executePart1(RectengularCoordinate<T>* pos, double* facing) {
         switch (type) {
         case Type::NORTH:
             pos->y += value;
@@ -151,6 +188,37 @@ struct Instruction {
             break;
         }
     }
+
+    template<typename T>
+    void executePart2(PolarCoordinate* w_pos, RectengularCoordinate<T>* pos) {
+        switch (type) {
+        case Type::NORTH:
+            *w_pos = PolarCoordinate(w_pos->toRect<T>() + RectengularCoordinate<T>(0, -1)*value);
+            break;
+        case Type::SOUTH:
+            *w_pos = PolarCoordinate(w_pos->toRect<T>() + RectengularCoordinate<T>(0, 1)*value);
+            break;
+        case Type::EAST:
+            *w_pos = PolarCoordinate(w_pos->toRect<T>() + RectengularCoordinate<T>(-1, 0)*value);
+            break;
+        case Type::WEST:
+            *w_pos = PolarCoordinate(w_pos->toRect<T>() + RectengularCoordinate<T>(1, 0)*value);
+            break;
+
+        case Type::FORWARD:
+            *pos += w_pos->toRect<T>()*value;
+            
+            break;
+        case Type::RIGHT:
+            w_pos->angle -= value * (M_PI / 180);
+            break;
+        case Type::LEFT:
+            w_pos->angle += value * (M_PI / 180);
+            break;
+        default:
+            break;
+        }
+    }
 };
 
 void day12(cli& c) {
@@ -166,8 +234,8 @@ void day12(cli& c) {
     RectengularCoordinate<double> pos(0, 0);
     double facing = 0;
     for (auto it = instructions.begin(); it != instructions.end(); ++it) {
-        it->execute<double>(&pos, &facing);
-        c.print(Instruction::getNameOfType(it->type)  + std::to_string(it->value) + " | " + std::to_string(pos.x) + "/" + std::to_string(pos.y) + " | " + std::to_string(facing));
+        it->executePart1<double>(&pos, &facing);
+        //c.print(Instruction::getNameOfType(it->type)  + std::to_string(it->value) + " | " + std::to_string(pos.x) + "/" + std::to_string(pos.y) + " | " + std::to_string(facing));
     }
 
     pos.x = fabs(pos.x);
@@ -175,4 +243,18 @@ void day12(cli& c) {
 
     c.print("the solution to part 1 is: " + std::to_string(pos.x + pos.y));
 
+
+
+    pos = RectengularCoordinate<double>(0, 0);
+    PolarCoordinate waypoint_pos(RectengularCoordinate<double>(1, 10));
+    
+    for (auto it = instructions.begin(); it != instructions.end(); ++it) {
+        it->executePart2<double>(&waypoint_pos, &pos);
+        c.print(Instruction::getNameOfType(it->type) + std::to_string(it->value) + " | " + std::to_string(pos.x) + "/" + std::to_string(pos.y) + " | " + std::to_string(waypoint_pos.toRect<double>().x) + "/" + std::to_string(waypoint_pos.toRect<double>().y));
+    }
+
+    pos.x = fabs(pos.x);
+    pos.y = fabs(pos.y);
+
+    c.print("the solution to part 2 is: " + std::to_string(pos.x + pos.y));
 }
