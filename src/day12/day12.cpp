@@ -193,16 +193,16 @@ struct Instruction {
     void executePart2(PolarCoordinate* w_pos, RectengularCoordinate<T>* pos) {
         switch (type) {
         case Type::NORTH:
-            *w_pos = PolarCoordinate(w_pos->toRect<T>() + RectengularCoordinate<T>(0, -1)*value);
+            *w_pos = PolarCoordinate(w_pos->toRect<T>() + RectengularCoordinate<T>(1, 0)*value);
             break;
         case Type::SOUTH:
-            *w_pos = PolarCoordinate(w_pos->toRect<T>() + RectengularCoordinate<T>(0, 1)*value);
-            break;
-        case Type::EAST:
             *w_pos = PolarCoordinate(w_pos->toRect<T>() + RectengularCoordinate<T>(-1, 0)*value);
             break;
+        case Type::EAST:
+            *w_pos = PolarCoordinate(w_pos->toRect<T>() + RectengularCoordinate<T>(0, 1)*value);
+            break;
         case Type::WEST:
-            *w_pos = PolarCoordinate(w_pos->toRect<T>() + RectengularCoordinate<T>(1, 0)*value);
+            *w_pos = PolarCoordinate(w_pos->toRect<T>() + RectengularCoordinate<T>(0, -1)*value);
             break;
 
         case Type::FORWARD:
@@ -210,10 +210,10 @@ struct Instruction {
             
             break;
         case Type::RIGHT:
-            w_pos->angle -= value * (M_PI / 180);
+            w_pos->angle += value * (M_PI / 180);
             break;
         case Type::LEFT:
-            w_pos->angle += value * (M_PI / 180);
+            w_pos->angle -= value * (M_PI / 180);
             break;
         default:
             break;
