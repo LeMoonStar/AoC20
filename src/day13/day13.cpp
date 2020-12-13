@@ -4,6 +4,22 @@
 #include <cli.h>
 #include <math.h>
 
+static long bruteforcePart2Range(const long beginning, const long ending, const std::vector<std::pair<int, int>>& shuttles) {
+    for (long current_timestamp = beginning;; current_timestamp += shuttles[0].first) {
+        if (ending != -1 && current_timestamp > ending) return -1;
+        
+        bool found = true;
+        for (auto it = shuttles.begin()+1; it != shuttles.end(); ++it) {
+            if ( (current_timestamp + it->second) % it->first != 0) {
+                found = false;
+                break;
+            }
+        }
+
+        if (found)
+            return current_timestamp;
+    }
+}
 
 void day13(cli& c) {
     std::vector<std::string> input = c.getSplittedInput("please enter your input for Day 13 (https://adventofcode.com/2020/day/13)");
@@ -33,24 +49,5 @@ void day13(cli& c) {
 
 
     c.print("BRUTEFORCING Part 2....");
-    for (long current_timestamp = 100000000000000;; current_timestamp += shuttles[0].first) {
-        if (i%10000000000 == 0)
-            c.print("still BRUTEFORCING (current timestamp " + std::to_string(current_timestamp) + ")...");
-        
-        bool found = true;
-        for (auto it = shuttles.begin()+1; it != shuttles.end(); ++it) {
-            //c.print("checking " + std::to_string(it->first) + " at pos " + std::to_string(it->second));
-            if ( (current_timestamp + it->second) % it->first != 0) {
-                found = false;
-                break;
-            }
-            //c.print(std::to_string(it->first) + " matches timestamp " + std::to_string(wanted_timestamp) + "(+" + std::to_string(it->second) + ")");
-        }
-
-        if (found) {
-            c.print("the solution to part 2 is: " + std::to_string(current_timestamp));
-            return;
-        }
-        
-    }
+    c.print("the solution to part 2 is: " + std::to_string(bruteforcePart2Range(100000000000000, -1, shuttles)));
 }
