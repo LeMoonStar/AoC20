@@ -4,11 +4,8 @@
 #include <cli.h>
 #include <math.h>
 
-static cli* cl;
 
 void day13(cli& c) {
-    cl = &c;
-
     std::vector<std::string> input = c.getSplittedInput("please enter your input for Day 13 (https://adventofcode.com/2020/day/13)");
 
     int timestamp = std::stoi(input[0]);
@@ -36,15 +33,14 @@ void day13(cli& c) {
 
 
     c.print("BRUTEFORCING Part 2....");
-    for (long i = 100000000000000;;++i) {
+    for (long current_timestamp = 100000000000000;; current_timestamp += shuttles[0].first) {
         if (i%10000000000 == 0)
-            c.print("still BRUTEFORCING (current timestamp " + std::to_string(i) + ")...");
+            c.print("still BRUTEFORCING (current timestamp " + std::to_string(current_timestamp) + ")...");
         
         bool found = true;
-        long wanted_timestamp = i*shuttles[0].first;
         for (auto it = shuttles.begin()+1; it != shuttles.end(); ++it) {
             //c.print("checking " + std::to_string(it->first) + " at pos " + std::to_string(it->second));
-            if ( (wanted_timestamp + it->second) % it->first != 0) {
+            if ( (current_timestamp + it->second) % it->first != 0) {
                 found = false;
                 break;
             }
@@ -52,7 +48,7 @@ void day13(cli& c) {
         }
 
         if (found) {
-            c.print("the solution to part 2 is: " + std::to_string(wanted_timestamp));
+            c.print("the solution to part 2 is: " + std::to_string(current_timestamp));
             return;
         }
         
