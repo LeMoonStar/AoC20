@@ -16,7 +16,7 @@ static void bruteforcePart2Thread(const std::vector<std::pair<int, int>>& shuttl
         if (exit) return;
         long beginning = nextRange;
         nextRange += RANGE_PER_THREAD;
-        c.print(std::to_string(td_num) + ": NEW RANGE: " + std::to_string(beginning) + " - " + std::to_string(beginning + RANGE_PER_THREAD));
+        // c.print(std::to_string(td_num) + ": NEW RANGE: " + std::to_string(beginning) + " - " + std::to_string(beginning + RANGE_PER_THREAD)); // FOR DEBUG POURPOSES, SLOWS BRUTEFORCE DOWN.
         guard.unlock();
 
         long ending = beginning + RANGE_PER_THREAD;
