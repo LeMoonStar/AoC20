@@ -3,7 +3,46 @@
 #include <common.h>
 #include <cli.h>
 #include <math.h>
+#include <thread>
+#include <mutex>
+#include <algorithm>
 
+#define THREAD_COUNT 8
+#define ITERATIONS_PER_THREAD 100000000000000L
+
+static void bruteforcePart2Thread(const std::vector<std::pair<int, int>>& shuttles, long& nextRange, bool& exit, long& result, cli& c, const int td_num,  std::mutex& guard) {
+    while (true) {
+
+        guard.lock();
+        if (exit) return;
+        long beginning = nextRange;
+        nextRange += ITERATIONS_PER_THREAD*shuttles[0].first;
+        c.print(std::to_string(td_num) + ": NEW RANGE: " + std::to_string(beginning) + " - " + std::to_string(beginning + ITERATIONS_PER_THREAD*shuttles[0].first)); // FOR DEBUG POURPOSES, SLOWS BRUTEFORCE DOWN.
+        guard.unlock();
+
+        long ending = beginning + ITERATIONS_PER_THREAD*shuttles[0].first;
+
+        for (long current_timestamp = beginning; current_timestamp < ending; current_timestamp += shuttles[0].first) {
+
+            bool found = true;
+            for (auto it = shuttles.begin()+1; it != shuttles.end(); ++it) {
+                if ( (current_timestamp + it->second -shuttles[0].second) % it->first != 0) {
+                    found = false;
+                    break;
+                }
+            }
+
+            if (found) {
+                guard.lock();
+                if (!exit)
+                    result = current_timestamp - shuttles[0].second;
+                exit = true;
+                guard.unlock();
+                return;
+            }
+        }
+    }
+}
 
 void day13(cli& c) {
     std::vector<std::string> input = c.getSplittedInput("please enter your input for Day 13 (https://adventofcode.com/2020/day/13)");
@@ -33,24 +72,28 @@ void day13(cli& c) {
 
 
     c.print("BRUTEFORCING Part 2....");
-    for (long current_timestamp = 100000000000000;; current_timestamp += shuttles[0].first) {
-        if (i%10000000000 == 0)
-            c.print("still BRUTEFORCING (current timestamp " + std::to_string(current_timestamp) + ")...");
-        
-        bool found = true;
-        for (auto it = shuttles.begin()+1; it != shuttles.end(); ++it) {
-            //c.print("checking " + std::to_string(it->first) + " at pos " + std::to_string(it->second));
-            if ( (current_timestamp + it->second) % it->first != 0) {
-                found = false;
-                break;
-            }
-            //c.print(std::to_string(it->first) + " matches timestamp " + std::to_string(wanted_timestamp) + "(+" + std::to_string(it->second) + ")");
-        }
 
-        if (found) {
-            c.print("the solution to part 2 is: " + std::to_string(current_timestamp));
-            return;
-        }
-        
+    std::sort(shuttles.rbegin(), shuttles.rend());
+
+    std::mutex guard;
+    long nextRange = ((100000000000000 + shuttles[0].first - 1) / shuttles[0].first) * shuttles[0].first, result = -1;
+    bool exit = false;
+
+    std::thread threads[THREAD_COUNT];
+    for (int i = 0; i < THREAD_COUNT; ++i) {
+        threads[i] = std::thread(bruteforcePart2Thread, std::ref(shuttles), std::ref(nextRange), std::ref(exit), std::ref(result), std::ref(c), i, std::ref(guard));
+        guard.lock();
+        c.print("created thread " + std::to_string(i));
+        guard.unlock();
     }
+
+    for (int i = 0; i < THREAD_COUNT; ++i) {
+        threads[i].join();
+        guard.lock();
+        c.print("thread " + std::to_string(i) + " exited.");
+        guard.unlock();
+    }
+
+    c.print("the solution to part 2 is: " + std::to_string(result));
+
 }
