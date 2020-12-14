@@ -7,14 +7,16 @@
 #include <mutex>
 #include <algorithm>
 
-#define THREAD_COUNT 8
-#define ITERATIONS_PER_THREAD 100000000000000L
+#define THREAD_COUNT std::thread::hardware_concurrency()
+#define ITERATIONS_PER_THREAD 1000000L
 
 static void bruteforcePart2Thread(const std::vector<std::pair<int, int>>& shuttles, long& nextRange, bool& exit, long& result, cli& c, const int td_num,  std::mutex& guard) {
     while (true) {
-
         guard.lock();
-        if (exit) return;
+        if (exit) {
+            guard.unlock();
+            return;
+        }
         long beginning = nextRange;
         nextRange += ITERATIONS_PER_THREAD*shuttles[0].first;
         c.print(std::to_string(td_num) + ": NEW RANGE: " + std::to_string(beginning) + " - " + std::to_string(beginning + ITERATIONS_PER_THREAD*shuttles[0].first)); // FOR DEBUG POURPOSES, SLOWS BRUTEFORCE DOWN.
@@ -34,7 +36,8 @@ static void bruteforcePart2Thread(const std::vector<std::pair<int, int>>& shuttl
 
             if (found) {
                 guard.lock();
-                if (!exit)
+                c.print(std::to_string(td_num) + ": SOLVED: " + std::to_string(current_timestamp - shuttles[0].second));
+                if (!exit || (exit && result > current_timestamp - shuttles[0].second))
                     result = current_timestamp - shuttles[0].second;
                 exit = true;
                 guard.unlock();
