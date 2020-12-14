@@ -5,9 +5,10 @@
 #include <math.h>
 #include <thread>
 #include <mutex>
+#include <algorithm>
 
 #define THREAD_COUNT 8
-#define RANGE_PER_THREAD 1000000000
+#define ITERATIONS_PER_THREAD 100000000000000L
 
 static void bruteforcePart2Thread(const std::vector<std::pair<int, int>>& shuttles, long& nextRange, bool& exit, long& result, cli& c, const int td_num,  std::mutex& guard) {
     while (true) {
@@ -15,18 +16,17 @@ static void bruteforcePart2Thread(const std::vector<std::pair<int, int>>& shuttl
         guard.lock();
         if (exit) return;
         long beginning = nextRange;
-        nextRange += RANGE_PER_THREAD;
-        // c.print(std::to_string(td_num) + ": NEW RANGE: " + std::to_string(beginning) + " - " + std::to_string(beginning + RANGE_PER_THREAD)); // FOR DEBUG POURPOSES, SLOWS BRUTEFORCE DOWN.
+        nextRange += ITERATIONS_PER_THREAD*shuttles[0].first;
+        c.print(std::to_string(td_num) + ": NEW RANGE: " + std::to_string(beginning) + " - " + std::to_string(beginning + ITERATIONS_PER_THREAD*shuttles[0].first)); // FOR DEBUG POURPOSES, SLOWS BRUTEFORCE DOWN.
         guard.unlock();
 
-        long ending = beginning + RANGE_PER_THREAD;
+        long ending = beginning + ITERATIONS_PER_THREAD*shuttles[0].first;
 
-        for (long current_timestamp = beginning;; current_timestamp += shuttles[0].first) {
-            if (current_timestamp > ending) break;
+        for (long current_timestamp = beginning; current_timestamp < ending; current_timestamp += shuttles[0].first) {
 
             bool found = true;
             for (auto it = shuttles.begin()+1; it != shuttles.end(); ++it) {
-                if ( (current_timestamp + it->second) % it->first != 0) {
+                if ( (current_timestamp + it->second -shuttles[0].second) % it->first != 0) {
                     found = false;
                     break;
                 }
@@ -35,7 +35,7 @@ static void bruteforcePart2Thread(const std::vector<std::pair<int, int>>& shuttl
             if (found) {
                 guard.lock();
                 if (!exit)
-                    result = current_timestamp;
+                    result = current_timestamp - shuttles[0].second;
                 exit = true;
                 guard.unlock();
                 return;
@@ -73,9 +73,12 @@ void day13(cli& c) {
 
     c.print("BRUTEFORCING Part 2....");
 
+    std::sort(shuttles.rbegin(), shuttles.rend());
+
     std::mutex guard;
-    long nextRange = 100000000000000, result = -1;
+    long nextRange = ((100000000000000 + shuttles[0].first - 1) / shuttles[0].first) * shuttles[0].first, result = -1;
     bool exit = false;
+
     std::thread threads[THREAD_COUNT];
     for (int i = 0; i < THREAD_COUNT; ++i) {
         threads[i] = std::thread(bruteforcePart2Thread, std::ref(shuttles), std::ref(nextRange), std::ref(exit), std::ref(result), std::ref(c), i, std::ref(guard));
